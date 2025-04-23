@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Noto Sans KR', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .slide {
+            width: 1680px;
+            min-height: 720px;
+            position: relative;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+        .header {
+            background: #005b96;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .title {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .authors {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        .journal {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        .summary-container {
+            background: #f0f5fa;
+            padding: 12px 30px;
+            border-bottom: 1px solid #e1e5e8;
+            max-width: 100%;
+        }
+        .summary-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #005b96;
+        }
+        .summary {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 15px;
+            padding: 15px;
+            flex: 1;
+        }
+        .section {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        .section-title {
+            color: #005b96;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #005b96;
+        }
+        .section-content {
+            font-size: 13px;
+            line-height: 1.6;
+            overflow-y: visible;
+        }
+        .term {
+            font-weight: bold;
+            color: #005b96;
+        }
+        .bullet {
+            margin-left: 8px;
+            text-indent: -8px;
+            padding-left: 8px;
+            margin-bottom: 6px;
+        }
+        .bullet:before {
+            content: "• ";
+            color: #005b96;
+        }
+        .eng {
+            color: #666;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="header">
+            <div class="title">Surrogate-based pneumatic and aerodynamic allocation design optimization for flapping-wing micro air vehicles</div>
+            <div class="authors">Hao Zheng, Zhonglai Wang, Wei Zhang, Haiyang Yu, Cui Wu</div>
+            <div class="journal">Aerospace Science and Technology 148 (2024) 109108</div>
+        </div>
+
+        <div class="summary-container">
+            <div class="summary-title">논문 요약</div>
+            <div class="summary">
+                본 연구는 플래핑 날개 초소형 비행체(FWMAV)의 생체모방 구조와 공기역학적 특성 간의 매핑 관계를 파악하고, 공압 기능과 기동 능력의 종합적인 성능을 최적화하기 위한 대리 모델 기반 접근법을 제안합니다. 다중 충실도 데이터셋을 활용한 실험적 대리 모델을 구축하고 효율적인 전역 최적화 전략을 통해 예측 정확도를 향상시키면서 실험 비용을 최소화합니다. 또한 자세 제어 패턴에 따른 공력 특성에 대한 포괄적인 대리 모델을 개발했으며, 생체모방 구조의 최적 조합을 찾아 FWMAV의 공압 및 토크 할당을 향상시켰습니다. 최적화된 구조는 실험적 검증을 통해 최대 11.5%의 양력 향상과 최소 5.4%의 토크 발생 개선을 달성했습니다.
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <div class="section-title">Introduction: 연구 동기</div>
+                <div class="section-content">
+                    <div class="bullet">자연 생물체와 같은 비행 능력 구현은 인류의 오랜 열망으로, 초소형 비행체(MAV) 개발의 급속한 발전에 따라 플래핑 날개 초소형 비행체(FWMAV)는 생체모방 및 초소형화 가능성 때문에 주목받고 있음</div>
+                    <div class="bullet">군사 정찰, 테러 방지, 농업 활동 등 다양한 응용 분야에서 활용 가능성이 입증되었지만, 불안정한 공압 성능으로 인해 실제 비행 하중과 비행 시간에 제약이 있음</div>
+                    <div class="bullet">현재 공기역학적 할당 방법의 제한된 제어 입력 범위로 인해 생체 모방 비행체가 자연 비행 생물의 뛰어난 기동성을 아직 보여주지 못함</div>
+                    <div class="bullet">생체모방 구조 매개변수가 플래핑 날개의 공기역학적 특성에 미치는 영향에 대한 이해 부족이 주요 원인임</div>
+                    <div class="bullet">플래핑 날개 비행의 공기역학적 메커니즘을 이해하는 것이 해당 설계 매개변수를 최적화하여 공기역학적 성능과 제어 속성을 향상시키는 토대가 됨</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Related Works: 관련 연구</div>
+                <div class="section-content">
+                    <div class="bullet">준정상 공기역학 모델(quasi-steady aerodynamic model)과 전산유체역학(CFD) 방법이 생체모방 구조 매개변수의 공기역학적 반응 분석에 가장 깊이 있는 방법론임</div>
+                    <div class="bullet">이러한 방법들은 플래핑 날개의 형태, 공기역학적 환경 및 기본 공기역학적 메커니즘에 관한 공학적 단순화를 포함함</div>
+                    <div class="bullet">불안정 유체-구조 상호작용 분석 방법(unsteady fluid-structure interaction)은 능동적 유연 날개 변형을 통합하여 준정상 모델의 과도하게 단순화된 조건을 보완함</div>
+                    <div class="bullet">다항 반응 표면(PRS), 크리깅(Kriging), 방사 기저 함수(RBF), 신경망(NN) 등 실험적 대리 기반 방법을 사용하여 생체 설계 매개변수와 공기역학적 성능 간의 상관관계 파악</div>
+                    <div class="bullet">대리 모델의 예측 정확도는 샘플 학습 규모에 따라 달라지므로, 최적의 예측 성능을 보장하면서 실험 비용을 줄이는 방법 탐색이 필요</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Method: 새로운 접근 방법</div>
+                <div class="section-content">
+                    <div class="bullet">FWMAV의 전반적인 비행 성능 최적화를 위한 대리 기반 최적화 방법 제안</div>
+                    <div class="bullet">플래핑 전달 최적화: 플래핑 메커니즘의 최적 치수와 배치를 식별하여 플래핑 각도(FA)와 전달 각도(γmin)를 종합적으로 최대화</div>
+                    <div class="bullet">날개 구조 최적화: 생체모방적 날개 구조 설계를 통한 공압 성능 향상</div>
+                    <div class="bullet">다중 충실도 대리 기반 접근법: 전산유체역학(CFD) 데이터셋과 실험 데이터셋을 통합하는 가법 스케일링 함수 기반 다중 충실도 대리(AS-MFS) 모델 개발</div>
+                    <div class="bullet">효율적인 전역 최적화(EGO) 전략: 샘플 업데이팅을 위한 전략을 통합하여 실험 비용을 최소화하면서 예측 정확도 향상</div>
+                    <div class="bullet">포괄적인 공기역학적 대리 모델: 제어 입력이 공기역학적 특성에 미치는 영향을 고려하여 다양한 자세 제어 패턴에서 공압 성능과 토크 할당을 정확하게 예측</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Experiment: 실험 방법과 결과</div>
+                <div class="section-content">
+                    <div class="bullet">풍동 플랫폼을 구축하여 최적화된 구조의 생체모방 공기역학적 성능 검증</div>
+                    <div class="bullet">입자 이미지 속도계(PIV) 시각화를 통해 최적화된 이중 날개 플랩의 공기역학적 원리와 비행 메커니즘 분석</div>
+                    <div class="bullet">실제 비행을 시뮬레이션하여 설계된 플래핑 날개의 공압력 측정</div>
+                    <div class="bullet">플래핑 빈도(f), 유속(v), 공격각(AoA)의 작동 조건이 이중 날개 비행의 평균 양력과 항력에 미치는 영향 조사</div>
+                    <div class="bullet">실험 결과: 플래핑 빈도 18Hz, 공격각 45°, 상대 유속 2m/s의 최적 작동 조건에서 0.3791N의 양력 발생 및 양의 추력 보장</div>
+                    <div class="bullet">최적화된 날개 구조는 평균 양력 생성 성능을 약 11.02% 향상시켰으며, 16Hz 빈도에서 최대 양력은 약 11.5% 증가</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Discussion: 결과의 해석</div>
+                <div class="section-content">
+                    <div class="bullet">T자형 꼬리 구조 최적화를 통해 요(yaw) 24.1%, 피치(pitch) 5.4%, 롤(roll) 패턴 9.4%의 토크 할당 향상을 달성하면서 최대 양력 감소는 1.3%에 불과</div>
+                    <div class="bullet">꼬리 없는(tailless) 공기역학적 할당 전략이 기존의 꼬리가 있는 전략보다 더 넓은 토크 생성 범위를 제공하지만, 비제어 상태에서는 비행 불안정성 보임</div>
+                    <div class="bullet">꼬리 없는 FWMAV는 호버링 비행에서 우수한 내구성과 호버링 및 기동 비행 모두에 대한 빠른 전환 능력을 보여줌</div>
+                    <div class="bullet">꼬리 없는 모드의 비행 제어는 일반적으로 두 개의 제어 입력으로 세 개의 상태 출력을 관리하는 부족 작동 시스템(under-actuation system)으로 작동</div>
+                    <div class="bullet">최적화 결과를 토대로 세 가지 하위 변종(prototype)으로 구성된 새로운 이중 날개 FWMAV 프로토타입 제안</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Conclusion: 최종 요약</div>
+                <div class="section-content">
+                    <div class="bullet">FWMAV의 공압 및 공기역학적 할당 성능 향상을 위한 포괄적인 최적화 설계 달성을 위한 대리 기반 접근법 제안</div>
+                    <div class="bullet">시뮬레이션과 실험 데이터셋을 통합하여 생체 매개변수와 공기역학적 특성 간의 매핑 관계를 규명하는 다중 충실도 대리 모델 구축</div>
+                    <div class="bullet">효율적인 전역 최적화 전략으로 실험 비용을 효과적으로 줄이면서 대리 모델의 예측 정확도 향상</div>
+                    <div class="bullet">최적화된 구조의 플래핑 날개는 최대 11.5%의 양력 향상, T자형 꼬리 구조 최적화로 요, 피치, 롤 패턴에서 토크 할당 개선(각각 24.1%, 5.4%, 9.4%)</div>
+                    <div class="bullet">제안된 방법은 다양한 생체 모방 비행체에 광범위하게 적용 가능하지만, 특정 구조 최적화 문제에는 해당 매핑 모델을 구축해야 함</div>
+                    <div class="bullet">이 방법의 잠재력은 생체 영감 비행체의 미래 설계에 영감을 주어 실제 활용 요구에 맞게 비행 기능을 향상시키는 데 있음</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
